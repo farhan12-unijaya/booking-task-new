@@ -498,7 +498,3 @@ Breadcrumbs::register('distribution', function ($breadcrumbs) {
     $breadcrumbs->push('Agihan', route('distribution'));
 });
 
-Breadcrumbs::register('booking', function ($breadcrumbs) {
-    $breadcrumbs->parent('home');
-    $breadcrumbs->push('Booking', route('Pegurusan Booking'));
-});

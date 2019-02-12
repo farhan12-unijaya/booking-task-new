@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="modal-upload" tabindex="-1" role="dialog" aria-labelledby="addModalTitle" aria-hidden="true">
+<div class="modal fade" id="modal-addGeneral" tabindex="-1" role="dialog" aria-labelledby="addModalTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body m-t-20">
-                <form action="{{ route('admin.letter.attachment', $type->id) }}" enctype="multipart/form-data" class="attachment dropzone no-margin">
+                <form enctype="multipart/form-data" class="attachment dropzone no-margin">
                     <div class="fallback">
                         <input name="file" type="file" multiple/>
                     </div>
@@ -24,103 +24,63 @@
     </div>
 </div>
 
+
 <script type="text/javascript">
 
-$("#modal-upload").modal('show');
+$('#modal-addGeneral').modal('show');
+$(".modal form").validate();
 
-function submit() {
-    swal({
-        title: "Berjaya!",
-        text: "Data yang telah dikemaskini.",
-        icon: "success",
-        button: "OK",
-    })
-    .then((confirm) => {
-        $("#modal-upload").modal('hide');
-    });
-}
 
-$(".attachment").dropzone({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    url: "{{ route('admin.letter.attachment', $type->id) }}",
-    addRemoveLinks : true,
-    maxFiles: 1,
-    acceptedFiles: '.docx,.doc,.odt, .xls',
-    uploadMultiple: false,
-    parallelUploads: 1,
-    dictRemoveFile: "Padam Fail",
-    init: function () {
-        var myDropzone = this;
 
-        $.ajax({
-            url: '{{ route('admin.letter.attachment', $type->id) }}',
-            method: 'get',
-            dataType: 'json',
-            async: true,
-            contentType: false,
-            processData: false,
-            success: function(data) {
-                $.each(data, function(key,value){
-                    var mockFile = { name: value.name, size: value.size, id: value.id };
-                    myDropzone.emit("addedfile", mockFile);
-                    myDropzone.emit("thumbnail", mockFile, "{{ asset('images/docx.jpg') }}");
+$("#form-add-general").submit(function(e) {
 
-                    $(mockFile.previewElement).prop('id', value.id);
-                    $(".dz-details > img").attr('alt', '');
-                });
-            }
-        });
+// if(!e.isDefaultPrevented()){
+// 	console.log('tess');
+// }
+e.preventDefault();
+var form = $(this);
 
-        myDropzone.on("addedfile", function (file) {
-            if(file.id) {
-                file._downloadLink = Dropzone.createElement("<a class=\"btn btn-default btn-xs\" id=\"bt-down\" style=\"margin-top:5px;\" href=\"{{ url('general/letter/') }}/"+file.id+"/"+file.name+"\" title=\"Muat Turun\" data-dz-download><i class=\"fa fa-download m-r-5\"></i> Muat Turun</a>");
-                file.previewElement.appendChild(file._downloadLink);
-            }
-            myDropzone.emit("thumbnail", file, "{{ asset('images/docx.jpg') }}");
-        });
 
-        myDropzone.on("maxfilesexceeded", function(file) {
-            myDropzone.removeAllFiles();
-            myDropzone.addFile(file);
-        });
+if(!form.valid())
+   return;
 
-        $(".dz-remove").addClass('btn', 'btn-danger', 'btn-xs');
+
+
+
+$.ajax({
+    url: form.attr('action'),
+    type: 'POST',
+    method: form.attr('method'),
+    data: new FormData(form[0]),
+    dataType: 'json',
+    async: true,
+    contentType: false,
+    processData: false,
+    success: function(data) {
         
+        swal(data.title, data.message, data.status);
+        $("#modal-addGeneral").modal("hide");
+        table.api().ajax.reload(null, false);
     },
-    success: function(file, response) {
-        file.previewElement.id = response.id;
-        file._downloadLink = Dropzone.createElement("<a class=\"btn btn-default btn-xs\" id=\"bt-down\" style=\"margin-top:5px;\" href=\"{{ url('general/letter') }}/"+response.id+"/"+file.name+"\" title=\"Muat Turun\" data-dz-download><i class=\"fa fa-download m-r-5\"></i> Muat Turun</a>");
-        file.previewElement.appendChild(file._downloadLink);
-        return file.previewElement.classList.add("dz-success");
-    },
-    removedfile: function(file) {
-        swal({
-            title: "Padam Data",
-            text: "Data yang telah dipadam tidak boleh dikembalikan. Teruskan?",
-            icon: "warning",
-            buttons: ["Batal", { text: "Padam", closeModal: false }],
-            dangerMode: true,
-        })
-        .then((confirm) => {
-            if (confirm) {
-                $.ajax({
-                    url: '{{ route('admin.letter.attachment', $type->id) }}',
-                    method: 'delete',
-                    dataType: 'json',
-                    async: true,
-                    contentType: false,
-                    processData: false,
-                    success: function(data) {
-                        swal(data.title, data.message, data.status);
-                        if(data.status == "success")
-                            file.previewElement.remove();
-                    }
-                });
-            }
-        });
-    },
+    error: function(json){
+        alert('ada error', json.status);
+    }
+});
 });
 
+
+$(".datepicker").datepicker({
+        language: 'ms',
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        onClose: function() {
+            $(this).valid();
+        },
+    }).on('changeDate', function(){
+        $(this).trigger('change');
+    });
+
+
 </script>
+
+

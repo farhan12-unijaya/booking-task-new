@@ -69,13 +69,8 @@ class BookingController extends Controller
                 ->editColumn('image', function($type){
                    $image = "";
                    $url = str_replace('public/','storage/',$type->image);
-                   // return $image .= '<img src="{{asset('storage/room_images/thumbnail/'.$url)}}"'>
-                    // $url = "localhost:8000/storage/room_images/thumbnail/$type->image";
-                    // $url = "{{asset('storage/room_images/thumbnail/.$url)}}";
-                     return $image .= '<img src="'. $url. '" border="0" width="40" class="img-rounded" align="center" />'; 
-                    
-                    
-
+                   return $image .= '<img src="'. $url. '" border="0" width="40" class="img-rounded" align="center" />'; 
+         
                 })
                 
                 ->editColumn('created_at', function ($type) {
@@ -89,8 +84,7 @@ class BookingController extends Controller
                     return $button;
                 })
                 ->rawColumns(['image', 'action'])
-                
-                
+          
                 ->make(true);
         }
         else {
@@ -210,28 +204,42 @@ class BookingController extends Controller
         // Excel::import(new GuestListExcel , 'guestlist1.xlsx');
 
         $tanggal = Carbon::createFromFormat('d/m/Y', $request->tanggal)->toDateString();
+
+        
+        $room = MasterRoom::where('id' ,$request->room_id)->first();
         $check = Booking::where('room_id', $request->room_id)
         ->where('tanggal', $tanggal)
         //->where('time_from', '>',  $request->timefrom)
         // ->where('time_to', '<=', $request->timefrom )
         ->first();
-        $alert = "";
+       // $alert = "";
         if($check)
         {
                 $alert = "Ruangan Penuh";
                 return response()->json(['status' => 'error', 'title' => $alert, 'message' => $alert]);
         }else{
 
+                if(date('N', strtotime($tanggal)) >= 6){   
+                    $alert = "Anda Mendapatkan Harga Hari Libur";   
+                    $price = $room->price_holiday;      
+                }else{  
+                    $alert = "Anda Mendapatkan Harga Normal";                  
+                    $price = $room->price_non_holiday;               
+                }
+
              $booking = Booking::create([
             'pemohon_id' => auth()->id(),
             'room_id' => $request->room_id,          
             'tanggal' => $tanggal,
             'time_from' => $request->timefrom,
-            'time_to' => $request->timeto
+            'time_to' => $request->timeto,
+            'price' => $price
             ]);
+           
+           
+            return response()->json(['status' => 'success', 'title' => 'Booking Berhasil', 'message' => $alert]);
 
-            $alert = "Ruangan Telah Terbooking";
-            return response()->json(['status' => 'success', 'title' => $alert, 'message' => $alert]);
+            
 
         }
         

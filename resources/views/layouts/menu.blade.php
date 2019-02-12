@@ -12,15 +12,7 @@
 	</a>
 	<span class="icon-thumbnail"><i class="pg-mail"></i></span>
 </li>
-<<<<<<< refs/remotes/origin/master
-<li class="{{ request()->is('booking*') ? 'active' : '' }}">
-	<a class="{{--detailed--}}" href="{{ route('booking') }}">
-		<span class="title">Booking</span>
-		<!-- <span class="entity">3 Notifikasi Baru</span> -->
-	</a>
-	<span class="icon-thumbnail"><i class="pg-mail"></i></span>
-</li>
-=======
+
 
 @if(auth()->user()->hasRole('pemohon'))
 
@@ -42,7 +34,7 @@
 
 @endif
 
->>>>>>> Update Version 1.1
+
 @if(auth()->user()->hasRole('admin'))
 <li class="{{ request()->is('admin/settings*') ? 'active' : '' }}">
 	<a href="{{ route('admin.settings') }}">

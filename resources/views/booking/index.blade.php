@@ -8,26 +8,21 @@
     <div class=" container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0">
         <div class="inner">
             <!-- START BREADCRUMB -->
-<<<<<<< refs/remotes/origin/master
-            {{ Breadcrumbs::render('admin') }}
-=======
+
             {{ Breadcrumbs::render('booking') }}
->>>>>>> Update Version 1.1
+
             <!-- END BREADCRUMB -->
             <div class="row">
                 <div class="col-xl-12 col-lg-12 ">
                     <!-- START card -->
                     <div class="card card-transparent">
                         <div class="card-block p-t-0">
-<<<<<<< refs/remotes/origin/master
-                            <h3 class='m-t-0'>Pengurusan Booking</h3>
-                            <p class="small hint-text m-t-5">
-                                Pengurusan booking boleh dilakukan melalui jaduan di bawah.
-=======
+
+    
                             <h3 class='m-t-0'>Booking Ruangan</h3>
                             <p class="small hint-text m-t-5">
                                 Booking Ruangan boleh dilakukan melalui jaduan di bawah.
->>>>>>> Update Version 1.1
+
                             </p>
                         </div>
                     </div>
@@ -51,10 +46,7 @@
 	<!-- Tab panes -->
 	<div class="tab-content">
 		<div class="tab-pane active slide-right" id="tab1">
-<<<<<<< refs/remotes/origin/master
-			@include('booking.tab1.index')
-		</div>
-=======
+
 			<!-- START CONTAINER FLUID -->
 <div class=" container-fluid container-fixed-lg bg-white">
 	<!-- START card -->
@@ -391,7 +383,7 @@ function removeGeneral(id) {
 
 		</div>
       
->>>>>>> Update Version 1.1
+
 		
 	</div>
 </div>

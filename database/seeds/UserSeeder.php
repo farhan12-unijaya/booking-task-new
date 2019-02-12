@@ -21,18 +21,6 @@ class UserSeeder extends Seeder
             'user_type_id' => 1,
             'user_status_id' => 1
         ])->assignRole('admin');
-<<<<<<< refs/remotes/origin/master
-        
-        App\User::create([
-            'name' => 'Pemohon',
-            'username' => 'pemohon1',
-            'password' => bcrypt('password'),
-            'email' => 'aiyub.unijaya@gmail.com',
-            'phone' => '',
-            'user_type_id' => 21,
-            'user_status_id' => 21
-        ])->assignRole('pemohon');
-=======
 
 
         App\User::create([
@@ -46,7 +34,6 @@ class UserSeeder extends Seeder
         ])->assignRole('pemohon');
 
 
->>>>>>> Update Version 1.1
     }
 
 

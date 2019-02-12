@@ -52,6 +52,12 @@ class RoomController extends Controller
                 ->editColumn('created_at', function ($type) {
                     return date('d/m/Y h:i A', strtotime($type->created_at));
                 })
+                ->editColumn('image', function($type){
+                    $image = "";
+                    $url = str_replace('public/','storage/',$type->image);
+                    return $image .= '<img src="'. $url. '" border="0" width="40" class="img-rounded" align="center" />'; 
+      
+                 })
                 ->editColumn('action', function ($type) {
                     $button = "";
                     // $button .= '<a href="#" class="btn btn-info btn-xs"><i class="fa fa-search"></i></a> ';
@@ -59,6 +65,7 @@ class RoomController extends Controller
                     $button .= '<a onclick="remove('.$type->id.')" href="javascript:;" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a> ';
                     return $button;
                 })
+                ->rawColumns(['image', 'action'])
                 ->make(true);
         }
         else {

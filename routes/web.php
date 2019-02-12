@@ -14,7 +14,8 @@
 Route::get('/guestlist/email', function() {
 	$email = "farhan12.unijaya@gmail.com";
 	$guestlist = "fauzan";
-	Mail::to($email)->send(new App\Mail\GuestListEmail($guestlist));
+	 Mail::to($email)->send(new App\Mail\GuestListEmail($guestlist));
+//	Mail::to($email)->send(new \App\Notifications\Rsvp($guestlist));
 	return 'Kirim berhasil';
   });
 

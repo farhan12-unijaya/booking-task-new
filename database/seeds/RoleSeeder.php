@@ -130,21 +130,12 @@ class RoleSeeder extends Seeder
             'guard_name' => 'web',
             'description' => 'Pegawai Pendakwa',
         ));
-<<<<<<< refs/remotes/origin/master
-      
-        DB::table('role')->insert(array(
-            'name' => 'pemohon',
-            'guard_name' => 'web',
-            'description' => 'Pemohon',
-        ));
-
-=======
 
          DB::table('role')->insert(array(
             'name' => 'pemohon',
             'guard_name' => 'web',
             'description' => 'Pemohon Booking',
         ));
->>>>>>> Update Version 1.1
+
     }
 }

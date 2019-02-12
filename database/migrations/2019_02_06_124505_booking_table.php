@@ -19,7 +19,8 @@ class BookingTable extends Migration
             $table->integer('room_id')->unsigned();
             $table->date('tanggal');
             $table->time('time_from');
-            $table->time('time_to');  
+            $table->time('time_to'); 
+            $table->integer('price');  
             $table->text('keterangan')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->foreign('pemohon_id')

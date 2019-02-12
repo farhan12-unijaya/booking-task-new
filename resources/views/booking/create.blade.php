@@ -60,9 +60,6 @@
 				 <div class="col-sm-12 p-3"/>
 
                 <div class="container">
-                <div class=" form-group col-md-12 text-center">
-					<button type="button" class="btn btn-info" onclick="check('form-add-general')"><i class="fa fa-check m-r-5"></i> Check Availability and Price</button>
-                </div>
                 <div class="form-group col-md-12 text-center">
                 <button type="button" class="btn btn-info" onclick="submitForm('form-add-general')"><i class="fa fa-check m-r-5"></i> Hantar</button>
                 </div>

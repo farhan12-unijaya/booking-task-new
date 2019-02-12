@@ -17,11 +17,7 @@
         "laravel/framework": "5.6.*",
         "laravel/passport": "^7.1",
         "laravel/tinker": "~1.0",
-<<<<<<< refs/remotes/origin/master
-        "maatwebsite/excel": "~2.1.0",
-=======
         "maatwebsite/excel": "^3.1",
->>>>>>> Update Version 1.1
         "nesbot/carbon": "1.33 as 1.25.0",
         "nwidart/laravel-modules": "^3.0",
         "phpoffice/phpword": "^0.15.0",
