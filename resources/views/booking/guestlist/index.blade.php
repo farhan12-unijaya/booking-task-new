@@ -309,7 +309,6 @@ function addGeneral() {
 
 
 function show(id) {
-
 	
 	$("#modal-div").load("{{ route('guestlist') }}/"+id);
 }
@@ -319,12 +318,12 @@ function add(id) {
 	console.log('ini id addnya', id);
 	var test = id;
 
-	$("#modal-div").load("{{route('guestlist.add.form','"+id+"')}}");
+	$("#modal-div").load('guestlist/add/'+id);
 }
 
 function upload(id) {
 
-$("#modal-div").load("{{ route('guestlist.upload','" +id+"' )}}");
+$("#modal-div").load('guestlist/upload/'+id);
 }
 
 

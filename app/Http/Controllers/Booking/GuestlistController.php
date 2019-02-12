@@ -97,12 +97,13 @@ class GuestlistController extends Controller
 
      // view detail guestlist
 
-     public function show(Request $request){
+     public function show(Request $request, $id){
         
 
-       $id = $request->id;
 
-        $guestlist = Guestlist::where('booking_id', $id)->get();
+
+        $guestlist = Guestlist::where('booking_id' , $id)->get();
+        
         $log = new LogSystem;
         $log->module_id = 49;
         $log->activity_type_id = 2;
@@ -115,7 +116,7 @@ class GuestlistController extends Controller
 
 
         
-        return view('booking.guestlist.show', compact(['guestlist','id']));
+        return view('booking.guestlist.show', compact('guestlist'));
 
         
     }
@@ -124,9 +125,8 @@ class GuestlistController extends Controller
 
     public function add(Request $request, $id){
         
-        $tesid = $request->id;
-        $parid = $id;
-        $guestlist = Guestlist::where('booking_id', $id)->get();
+      
+        $booking = Booking::find($id);
         
     
         $log = new LogSystem;
@@ -139,7 +139,7 @@ class GuestlistController extends Controller
         $log->created_by_user_id = auth()->id();
         $log->save();
 
-        return view('booking.guestlist.create', compact(['guestlist', 'tesid' ]));
+        return view('booking.guestlist.create', compact('booking'));
 
         
     }
@@ -148,21 +148,21 @@ class GuestlistController extends Controller
 
 
 
-    public function upload(Request $request)
+    public function upload(Request $request, $id)
     {
-        // $log = new LogSystem;
-        // $log->module_id = 47;
-        // $log->activity_type_id = 3;
-        // $log->description = "Popup Upload Excel Guestlist";
-        // $log->url = $request->fullUrl();
-        // $log->method = strtoupper($request->method());
-        // $log->ip_address = $request->ip();
-        // $log->created_by_user_id = auth()->id();
-        // $log->save();
 
-       // $type = MasterLetterType::findOrFail($request->id);
+        $booking = Booking::find($id);
 
-        return view('booking.guestlist.upload');
+        return view('booking.guestlist.upload', compact(['booking']));
+    }
+
+    public function upload_excel(Request $request, $id)
+    {
+        Excel::import(new GuestListExcel ,  request()->file('guestlist1'));
+        $booking = Booking::find($id);
+        return view('booking.guestlist.upload', compact(['booking']));
+        
+        
     }
 
 
@@ -247,13 +247,12 @@ class GuestlistController extends Controller
      */
     public function insert(Request $request) {
        
-        //Excel::import(new GuestListExcel , 'guestlist1.xlsx');
-
-
-
         
+
+
+
         $guestlist = Guestlist::create([
-            'booking_id' => 1,
+            'booking_id' => $request->booking_id,
             'name' => $request->name,
             'email' => $request->email,
             'rsvp' => $request->rsvp,

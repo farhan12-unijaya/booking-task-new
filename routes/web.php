@@ -2466,6 +2466,7 @@ Route::prefix('investigation')->group(function () {
 		Route::get('add/{id}', 'Booking\GuestlistController@add')->name('guestlist.add.form');
 		Route::get('upload/{id}', 'Booking\GuestlistController@upload')->name('guestlist.upload');
 		Route::post('attend/{id}', 'Booking\GuestlistController@attend')->name('guestlist.attend');
+		Route::post('upload/excel/{id}', 'Booking\GuestlistController@upload_excel')->name('guestlist.upload.excel');
 
 		
 

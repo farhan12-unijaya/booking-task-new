@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body m-t-20">
-                <form enctype="multipart/form-data" class="attachment dropzone no-margin">
+                <form action="{{ route('guestlist.upload.excel', $booking->id) }}" enctype="multipart/form-data" class="attachment dropzone no-margin">
                     <div class="fallback">
                         <input name="file" type="file" multiple/>
                     </div>

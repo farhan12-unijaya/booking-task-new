@@ -47,7 +47,9 @@
                 
 	              
 
-				
+			
+                <input type="hidden" name="booking_id" value="{{$booking->id}}">	
+			
 
 
 					
